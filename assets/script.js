@@ -93,7 +93,7 @@ const introElement = document.getElementById("intro");
 const questionElement = document.getElementById("question");
 const answerButton = document.getElementById("answers");
 const nextButton = document.getElementById("next-btn");
-const button1 = [document.getElementById("answer1"), 
+const button = [document.getElementById("answer1"), 
     document.getElementById("answer2"), 
     document.getElementById("answer3"), 
     document.getElementById("answer4")];
@@ -123,11 +123,12 @@ function askQuestion() {
     var currentQuestion = questions[currentQuestionIndex];
     var questionNumber = currentQuestionIndex++ + 1;
     questionElement.innerHTML = questionNumber + ". " + currentQuestion.question;
-    button1.innerHTML = currentQuestion.answers[0].text;
-    button2.innerHTML = currentQuestion.answers[1].text;
-    button3.innerHTML = currentQuestion.answers[2].text;
-    button4.innerHTML = currentQuestion.answers[3].text;
-    button1.addEventListener("click", evaluateAns);
+    for (var i = 0, i < 4, i++) {
+        button[i].innerHTML = currentQuestion.answers[i].text;
+    }
+
+    
+    button[0].addEventListener("click", evaluateAns);
 
 
 }
