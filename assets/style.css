@@ -1,0 +1,77 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+:root {
+    --bg-color-start: rgb(14, 20, 49);
+    --bg-color-end: rgb(0, 74, 59);
+    --btn-color: rgb(17, 53, 97);
+    --next-btn-color: orange;
+    --text-color: white;
+    --btn-hover-color: rgb(185, 63, 29);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    background: cover;
+    background: var(--bg-color-start);
+    background: linear-gradient(0deg, var(--bg-color-start) 0%, var(--bg-color-end) 100%);
+}
+
+header, footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1% 5% 1% 5%;
+}
+
+#high-scores {
+    
+}
+
+#timer {
+
+}
+
+.quiz {
+    color: var(--text-color);
+    padding: 5% 10%;
+}
+
+#question {
+    font-size: 140%;
+}
+
+#answers {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    background-color: var(--btn-color);
+    color: var(--text-color);
+    font-size: 110%;
+    border-radius: 10px;
+    padding: 2%;
+    margin: 1% 10%;
+    text-align: left;
+}
+
+.btn:hover, #next-btn:hover {
+    background-color: var(--btn-hover-color);
+    cursor: pointer;
+}
+
+#next-btn {
+    background-color: var(--next-btn-color);
+    border-radius: 10px;
+    font-size: 110%;
+    padding: 2%;
+    text-align: left;
+    margin: 5% 0;
+}
