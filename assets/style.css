@@ -18,9 +18,9 @@ body {
     display: flex;
     flex-direction: column;
     line-height: 1.5;
-    background: cover;
     background: var(--bg-color-start);
     background: linear-gradient(0deg, var(--bg-color-start) 0%, var(--bg-color-end) 100%);
+    background-attachment: fixed;
 }
 
 header, footer {
