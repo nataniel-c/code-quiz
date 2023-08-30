@@ -11,17 +11,15 @@
 
 <body>
     <header>
-        <section id="high-scores"></section>
-        <section id="timer"></section>
+        <a id="view-scores">View High Scores</a>
+        <h2>Time: <container id="time">0</container></h2>
+        <h2>Score: <container class="score">0</container></h2>
     </header>
     <div class="quiz">
         <h1 id="question">Question</h1>
         <p id="intro">Try to answer the following coding-related questions within the time limit.
             <br>Incorrect answers will penalize your score and time by ten.<br>
             <br>Good luck!
-        </p>
-        <p id="end">
-
         </p>
         <div id="answers">
             <button class="btn" id="answer1">Answer 1</button>
@@ -31,6 +29,26 @@
         </div>
         <button id="next-btn">Next Question</button>
     </div>
+
+    <div class="end">
+        <p>You scored: <container class="score">0</container></p>
+        <form action="">
+            <label for="initials">Enter your initials: 
+            <input type="text" id="initials" name="initials"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div class="score-list">
+        <h1>High Scores: </h1>
+            <ul class="high-scores">
+                <li>Score 1</li>
+                
+            </ul>
+            <button id="back">Exit</button>
+            <button id="clear">Clear High Scores</button>
+    </div>
+
     <script rel="script" src="./assets/script.js"></script>
 </body>
 </html>

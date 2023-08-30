@@ -18,6 +18,7 @@ body {
     display: flex;
     flex-direction: column;
     line-height: 1.5;
+    color: var(--text-color);
     background: var(--bg-color-start);
     background: linear-gradient(0deg, var(--bg-color-start) 0%, var(--bg-color-end) 100%);
     background-attachment: fixed;
@@ -38,12 +39,11 @@ header, footer {
 
 }
 
-.quiz {
-    color: var(--text-color);
-    padding: 5% 10%;
+div {
+    padding: 2% 10%;
 }
 
-#question {
+h1 {
     font-size: 140%;
 }
 
@@ -62,16 +62,49 @@ header, footer {
     text-align: left;
 }
 
-.btn:hover, #next-btn:hover {
+.btn:hover, #next-btn:hover, #back:hover, #clear:hover {
     background-color: var(--btn-hover-color);
     cursor: pointer;
 }
 
-#next-btn {
+#next-btn, #back, #clear {
     background-color: var(--next-btn-color);
     border-radius: 10px;
     font-size: 110%;
     padding: 2%;
     text-align: left;
     margin: 5% 0;
+}
+
+.end {
+    display: none;
+}
+
+.score-list {
+    display: none;
+}
+
+a {
+    font-size: 140%;
+    padding: 1%;
+    border-radius: 10px;
+    color: var(--next-btn-color);
+    text-decoration: underline;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+h2 {
+    display: flex;
+    font-size: 140%;
+    justify-content: center;
+}
+
+ul {
+    font-size: 120%;
+    margin: 0% 20% 0% 0%;
+    background-color: rgb(110, 189, 169);
+    color: black;
 }
