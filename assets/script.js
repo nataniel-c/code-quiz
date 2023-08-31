@@ -51,12 +51,14 @@ const timeElement = document.getElementById("time");
 // Score elements. The first score element is used multiple times within the page
 const scoreElement = document.querySelectorAll(".score");
 const scoreListElement = document.querySelector(".score-list");
+const highScores = document.querySelector(".high-scores");
 
 //Buttons
 const backButton = document.getElementById("back");
 const clearButton = document.getElementById("clear");
 const viewScoresButton = document.getElementById("view-scores");
 const startButton = document.querySelector(".start-btn");
+const submitScore = document.querySelector("#submit");
 
 // Elements within the quiz
 const quizElement = document.querySelector(".quiz");
@@ -97,10 +99,15 @@ function compareScores(a, b) {
 }
 
 // Clears score and question selection index (for repetition)
-// Gives user the option to start quiz. Hides quiz answers
+// Gives user the option to start quiz. Hides all other quiz elements
 function introduceQuiz() {
     currentQuestionIndex = 0;
-    for (var i = 0; i < 4; scoreElement.length) {
+    currentScore = 0;
+    introElement.style.display = "";
+    quizElement.style.display = "";
+    scoreListElement.style.display = "none";
+    endElement.style.display = "none";
+    for (var i = 0; i < scoreElement.length; i++) {
         scoreElement[i].innerHTML = currentScore;
     }    
     startButton.addEventListener("click", startQuiz);
@@ -192,28 +199,27 @@ function endGame() {
     // Clear the timer
     timerStarted = false;
     clearInterval(runTimer);
-    // Add the user's final score to the list of scores
-    scoreList.assign(scores, finalScore);
-    scoreList.scores.sort(compareScores);
     // Show the end text and form
     endElement.style.display = "block";
     // Hide answers
     answerButton.style.display = "none";
-
+    var userInitials = document.getElementById("initials");
     submitScore.addEventListener("click", function(event) {
         event.preventDefault();
-        
-        saveScore(finalScore);
+        saveScore(finalScore, userInitials);
     })
 }
  
 // Handle user input for scorekeeping
-function saveScore(s) {
-var userInitials = document.getElementById("initials");
-    var userInfo = {
-        initials: userInitials.value,
-        userScore: s,
-    }
+function saveScore(savedScore, savedInitials) {
+    var newScore = {
+        name: savedInitials.value.trim(),
+        score: savedScore.value
+    };
+    Object.assign(scoreList, newScore);
+    scoreList = scoreList.sort(
+        (s1, s2) => (s1.scores < s2.scores) ? 1 : (s1.scores > s2.scores) ? -1 : 0);
+    localStorage.setItem('scoreList', JSON.stringify(scoreList));
 }
 
 // Viewing scores will only be possible while not taking the quiz
@@ -222,7 +228,15 @@ function viewScores() {
         scoreListElement.style.display = "block";
         endElement.style.display = "none";
         quizElement.style.display = "none";
-        scoreListElement.innerHTML = scoreList;
+        if (scoreList !== null) {
+            var highScoreList = JSON.parse(localStorage.getItem('scoreList'));
+            for (var i = 0; i < scoreList.length; i++) {
+                var place = i + 1;
+                highScores.innerHTML =  "<li>" + 
+                place + ". " + highScoreList[i].name + " - " + highScoreList[i].score +
+                "</li>";
+            };
+        }
     }
     backButton.addEventListener("click", introduceQuiz)
     clearButton.addEventListener("click", function() {

@@ -55,18 +55,18 @@ h1 {
     text-align: left;
 }
 
-.btn:hover, .start-btn:hover, #back:hover, #clear:hover {
+.btn:hover, .start-btn:hover, #back:hover, #clear:hover, #submit:hover {
     background-color: var(--btn-hover-color);
     cursor: pointer;
 }
 
-.start-btn, #back, #clear {
+.start-btn, #back, #clear, #submit {
     background-color: var(--next-btn-color);
     border-radius: 10px;
     font-size: 110%;
     padding: 2%;
     text-align: left;
-    margin: 5% 0;
+    margin: 1%;
 }
 
 .end {
