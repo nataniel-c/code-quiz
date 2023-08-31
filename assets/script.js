@@ -1,109 +1,67 @@
-
 // Create a list of questions with premade answers
 const questions = [
     { question: "Commonly used data types do NOT include:", 
         answers: [
-            { text: "A. Strings", correct: false },
-            { text: "B. Booleans", correct: false },
-            { text: "C. Alerts", correct: true },
-            { text: "D. Numbers", correct: false },
+            { text: "A. strings", correct: false },
+            { text: "B. booleans", correct: false },
+            { text: "C. alerts", correct: true },
+            { text: "D. numbers", correct: false },
         ]
     },
-    { question: "Question 2", 
+    { question: "The condition in an if/else statement is enclosed with ______.", 
         answers: [
-            { text: "E", correct: true },
-            { text: "F", correct: false },
-            { text: "G", correct: false },
-            { text: "H", correct: false },
+            { text: "A. quotes", correct: false },
+            { text: "B. curly brackets", correct: true },
+            { text: "C. parenthesis", correct: false },
+            { text: "D. square brackets", correct: false },
         ]
     },
-    { question: "", 
+    { question: "Arrays in JavaScript can be used to store ______.", 
         answers: [
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
+            { text: "A. numbers and strings", correct: false },
+            { text: "B. other arrays", correct: false },
+            { text: "C. booleans", correct: false },
+            { text: "D. all of the above", correct: true },
         ]
     },
-    { question: "", 
+    { question: "String values must be enclosed within ______ when being assigned to variables.", 
         answers: [
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
+            { text: "A. commas", correct: false },
+            { text: "B. curly brackets", correct: false },
+            { text: "C. quotes", correct: true },
+            { text: "D. parenthesis", correct: false },
         ]
     },
-    { question: "", 
+    { question: "A useful tool used during development and debugging for printing content to the debugger is:", 
         answers: [
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-        ]
-    },
-    { question: "", 
-        answers: [
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-        ]
-    },
-    { question: "", 
-        answers: [
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-        ]
-    },
-    { question: "", 
-        answers: [
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-        ]
-    },
-    { question: "", 
-        answers: [
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-        ]
-    },
-    { question: "", 
-        answers: [
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
-            { text: "", correct: "" },
+            { text: "A. JavaScript", correct: false },
+            { text: "B. terminal/bash", correct: false },
+            { text: "C. for loops", correct: false },
+            { text: "D. console.log", correct: true },
         ]
     }    
 ];
 
-// Reference the elements that will be changed in the HTML as the quiz progresses
-
+// Define elements in the HTML that will be changed as the quiz progresses
 // Elements outside of the quiz
 const introElement = document.getElementById("intro");
 const endElement = document.querySelector(".end");
 const timeElement = document.getElementById("time");
 
-// Score elements
+// Score elements. The first score element is used multiple times within the page
 const scoreElement = document.querySelectorAll(".score");
-const scoreListElement = document.querySelector(".score-list")
+const scoreListElement = document.querySelector(".score-list");
 
-//B uttons
+//Buttons
 const backButton = document.getElementById("back");
 const clearButton = document.getElementById("clear");
 const viewScoresButton = document.getElementById("view-scores");
+const startButton = document.querySelector(".start-btn");
 
 // Elements within the quiz
 const quizElement = document.querySelector(".quiz");
 const questionElement = document.getElementById("question");
 const answerButton = document.getElementById("answers");
-const nextButton = document.getElementById("next-btn");
 const choices = [document.getElementById("answer1"), 
     document.getElementById("answer2"), 
     document.getElementById("answer3"), 
@@ -112,48 +70,60 @@ const choices = [document.getElementById("answer1"),
 // Set initial values for variables to be used internally within the script
 var currentQuestionIndex = 0;
 var currentScore = 0;
-var scoreList = [];
+var finalScore = 0;
+var scoreList = [
+    { names: "",
+    scores: ""}
+];
 var timerStarted = false;
 var time = 0;
 
+// Set the values for the displayed time and score on the page to be 0 as defined above
 timeElement.innerHTML = time;
-scoreElement[0].innerHTML = currentScore;
+for (var i = 0; i < scoreElement.length; i++) {
+    scoreElement[i].innerHTML = currentScore;
+}
 
 viewScoresButton.addEventListener("click", viewScores);
 
+// Used to sort the stored scores from order of highest to lowest
 function compareScores(a, b) {
     if (a < b) {
-        return -1;
-    } else if (a > b) {
         return 1;
+    } else if (a > b) {
+        return -1;
     }
     return 0;
 }
 
+// Clears score and question selection index (for repetition)
+// Gives user the option to start quiz. Hides quiz answers
 function introduceQuiz() {
     currentQuestionIndex = 0;
-    currentScore = 0;
-    time = 0;
-    nextButton.innerHTML = "Start Quiz";
-    nextButton.addEventListener("click", startQuiz);
+    for (var i = 0; i < 4; scoreElement.length) {
+        scoreElement[i].innerHTML = currentScore;
+    }    
+    startButton.addEventListener("click", startQuiz);
     questionElement.innerHTML = "Coding Quiz Challenge";
     answerButton.style.display = "none";
 }
 
+// Starts timer function concurrently with quiz function
+// Hides all introductory information and sets how to handle choosing right and wrong answers
 function startQuiz() {
-    time = 120;
+    time = 60;
+    timeElement.innerHTML = time;
     timerStarted = true;
     setInterval(runTimer, 1000);
     introElement.style.display = "none";
-    nextButton.innerHTML = "Next Question";
+    startButton.style.display = "none";
     answerButton.style.display = "";
     for (var i = 0; i < 4; i++) {
         choices[i].addEventListener("click", function(event) {
             var clickedButton = event.target;
             if (clickedButton.correct) {
                 choseCorrect();
-            }
-            else if (clickedButton.correct === false) {
+            } else if (clickedButton.correct === false) {
                 choseWrong();
             }
         })
@@ -161,6 +131,9 @@ function startQuiz() {
     askQuestion();
 }
 
+// Changes the displayed question and answer elements to correspond with the current question based on the question index
+// Assigns whether an answer element is correct or not correct based on the premade list of quesitons and answers
+// Also updates score on top right of page every time user moves on to the next question
 function askQuestion() {
     scoreElement[0].innerHTML = currentScore;
     if (currentQuestionIndex < questions.length) {
@@ -170,8 +143,7 @@ function askQuestion() {
             choices[i].innerHTML = currentQuestion.answers[i].text;
             if (currentQuestion.answers[i].correct) {
                 choices[i].correct = true;
-            }
-            else {
+            } else {
                 choices[i].correct = false;
             }
         }
@@ -181,6 +153,8 @@ function askQuestion() {
 }
 
 // Function that changes the value of the timer every second
+// If the quiz is not currently running, the time displayed on the page shall be 0
+// When the timer runs out it immediately ends the game 
 function runTimer() {
     if (time !== 0 && timerStarted) {
         time = time - 1;
@@ -193,44 +167,72 @@ function runTimer() {
     }
 }
 
+// These two functions handle what to do when the user gets an answer right or wrong
+// Also increases the count for the currentQuestionIndex
 function choseCorrect() {
     currentScore = currentScore + 10;
     currentQuestionIndex = currentQuestionIndex + 1;
-    console.log(currentScore);
     askQuestion();
 }
-
 function choseWrong() {
     currentScore = currentScore - 10;
     time = time - 10;
     currentQuestionIndex = currentQuestionIndex + 1;
-    console.log(currentScore);
     askQuestion();
 }
 
+// End game and give user the option to enter initials
 function endGame() {
-    timerStarted = false;
+    // Clear the question to show all done
     questionElement.innerHTML = "All Done!";
-    scoreElement[1].innerHTML = currentScore + time;
+    // Add the remaining time to the user's score
+    var finalScore = currentScore + time;
+    scoreElement[0].innerHTML = finalScore;
+    scoreElement[1].innerHTML = finalScore;
+    // Clear the timer
+    timerStarted = false;
     clearInterval(runTimer);
-    scoreList.push(currentScore);
-    scoreList.sort(compareScores);
+    // Add the user's final score to the list of scores
+    scoreList.assign(scores, finalScore);
+    scoreList.scores.sort(compareScores);
+    // Show the end text and form
     endElement.style.display = "block";
+    // Hide answers
     answerButton.style.display = "none";
-    nextButton.style.display = "none";
-}
 
-function viewScores() {
-    if (timerStarted === false) {
-        scoreListElement.style.display = "block";
-        quizElement.style.display = "none";
-        scoreListElement.innerHTML = scoreList;
-        backButton.addEventListener("click", introduceQuiz)
-        clearButton.addEventListener("click", function() {
-            scoreList = [];
-            viewScores();
-        })
+    submitScore.addEventListener("click", function(event) {
+        event.preventDefault();
+        
+        saveScore(finalScore);
+    })
+}
+ 
+// Handle user input for scorekeeping
+function saveScore(s) {
+var userInitials = document.getElementById("initials");
+    var userInfo = {
+        initials: userInitials.value,
+        userScore: s,
     }
 }
 
+// Viewing scores will only be possible while not taking the quiz
+function viewScores() {
+    if (timerStarted === false) {
+        scoreListElement.style.display = "block";
+        endElement.style.display = "none";
+        quizElement.style.display = "none";
+        scoreListElement.innerHTML = scoreList;
+    }
+    backButton.addEventListener("click", introduceQuiz)
+    clearButton.addEventListener("click", function() {
+        scoreList = [
+            { names: "",
+            scores: ""}
+        ];
+        viewScores();
+    })
+}
+
+// Function initializes quiz start page upon loading
 introduceQuiz();
